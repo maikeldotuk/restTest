@@ -3,7 +3,7 @@ var router = express.Router();
 var mongojs = require('mongojs');
 //var db = mongojs('mongodb://admin:admin123@ds037827.mongolab.com:37827/ng2todoapp', ['users']);
 //var db = mongojs('mongodb://maikeldotuk:54d413k14M@ds036617.mlab.com:36617/skillboxdb', ['users']);
-var db = mongojs('mongodb://maikel:54d413k14M@localhost:27017/skillboxdb', ['users']);
+var db = mongojs('mongodb://maikel:54d413k14M@maikel.uk:27017/skillboxdb', ['users']);
 
 
 /* GET All users */
