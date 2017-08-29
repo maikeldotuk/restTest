@@ -29,13 +29,13 @@ app.use(express.static('views'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
 
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+    res.render('404.html', { status: 404, url: req.url });
 });
 var server = app.listen(3000, function() {
     var host = 'localhost';
     var port = server.address().port;
     console.log('App listening at http://%s:%s', host, port);
 });
+
+
 module.exports = app;
