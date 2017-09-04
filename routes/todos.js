@@ -55,8 +55,11 @@ router.put('/todo/:id', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     var todo = req.body;
     var updObj = {};
-    if (todo.isCompleted) {
-        updObj.isCompleted = todo.isCompleted;
+    if (todo.title) {
+        updObj.title = todo.title;
+        updObj.logoURL = todo.logoURL;
+        updObj.mastery = todo.mastery;
+        updObj.descriptHTML = todo.descriptHTML;
     }
     if (todo.text) {
         updObj.text = todo.text;
@@ -78,6 +81,8 @@ router.put('/todo/:id', function(req, res, next) {
         });
     }
 });
+
+
 /* DELETE a Todo */
 router.delete('/todo/:id', function(req, res) {
     //This two headers are very important, without them the app won't work. 
