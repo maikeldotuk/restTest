@@ -39,18 +39,4 @@ var server = app.listen(3000, function() {
     console.log('App listening at http://%s:%s', host, port);
 });
 
-app.post('/images', function (req, res) {
-
-    // Store image.
-    FroalaEditor.Image.upload(req, '/images/', function(err, data) {
-        // Return data.
-        if (err) {
-            return res.send(JSON.stringify(err));
-        }
-        console.log(data);
-        res.send(data);
-    });
-});
-
-
 module.exports = app;
