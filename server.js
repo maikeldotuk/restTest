@@ -8,6 +8,7 @@ var todos = require('./routes/todos');
 var pages = require('./routes/pages');
 var users = require('./routes/users');
 var cors = require('cors')
+var FroalaEditor = require('./node_modules/wysiwyg-editor-node-sdk/lib/froalaEditor.js');
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'dist'));
@@ -26,6 +27,7 @@ app.use('/api/v1/', todos);
 app.use('/api/v1/', pages);
 app.use('/api/v1/', users);
 app.use(express.static('dist'));
+app.use('/images', express.static('images'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
 
@@ -35,6 +37,19 @@ var server = app.listen(3000, function() {
     var host = 'localhost';
     var port = server.address().port;
     console.log('App listening at http://%s:%s', host, port);
+});
+
+app.post('/images', function (req, res) {
+
+    // Store image.
+    FroalaEditor.Image.upload(req, '/uploads/', function(err, data) {
+        // Return data.
+        if (err) {
+            return res.send(JSON.stringify(err));
+        }
+
+        res.send(data);
+    });
 });
 
 
