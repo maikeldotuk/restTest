@@ -76,7 +76,7 @@ router.put('/todo/:id', function(req, res, next) {
             if (err) {
                 res.send(err);
             } else {
-                res.json(result,id);
+                res.json(result,_id);
             }
         });
     }
