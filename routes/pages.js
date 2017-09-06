@@ -7,6 +7,8 @@ var db = mongojs('mongodb://maikel:54d413k14M@maikel.uk:27017/skillboxdb', ['pag
 
 /* GET All pages */
 router.get('/pages', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
     db.pages.find(function(err, pages) {
         if (err) {
@@ -19,6 +21,8 @@ router.get('/pages', function(req, res, next) {
 });
 /* GET One Todo with the provided ID */
 router.get('/page/:id', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     db.pages.findOne({
         _id: mongojs.ObjectId(req.params.id)
     }, function(err, pages) {
@@ -32,6 +36,8 @@ router.get('/page/:id', function(req, res, next) {
 });
 /* POST/SAVE a Todo */
 router.post('/page', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
     var todo = req.body;
     if (!todo.title) {
