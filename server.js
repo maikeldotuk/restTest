@@ -13,7 +13,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'dist'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-app.use(logger(':method :url :status :response-time ms - :res[content-length]'));
+app.use(logger(':method :url :status - :res[content-length] :remote-addr :user-agent'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
