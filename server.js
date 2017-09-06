@@ -47,7 +47,7 @@ app.post('/images', function (req, res) {
         if (err) {
             return res.send(JSON.stringify(err));
         }
-
+        console.log(data);
         res.send(data);
     });
 });
