@@ -44,6 +44,8 @@ router.post('/page', function(req, res, next) {
             if (err) {
                 res.send(err);
             } else {
+                var constID = mongojs.ObjectId(req.params.id);
+                result.newID = constID;
                 res.json(result);
             }
         })
@@ -75,6 +77,8 @@ router.put('/page/:id', function(req, res, next) {
             if (err) {
                 res.send(err);
             } else {
+                var constID = mongojs.ObjectId(req.params.id);
+                result.newID = constID;
                 res.json(result);
             }
         });

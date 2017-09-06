@@ -43,6 +43,8 @@ router.post('/todo', function(req, res, next) {
             if (err) {
                 res.send(err);
             } else {
+                var constID = mongojs.ObjectId(req.params.id);
+                result.newID = constID;
                 res.json(result);
             }
         })
