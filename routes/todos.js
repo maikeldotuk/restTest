@@ -77,7 +77,7 @@ router.put('/todo/:id', function(req, res, next) {
                 res.send(err);
             } else {
                 var constID = mongojs.ObjectId(req.params.id);
-                res.json(result, constID);
+                res.json(result);
             }
         });
     }
