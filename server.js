@@ -42,7 +42,7 @@ var server = app.listen(3000, function() {
 app.post('/images', function (req, res) {
 
     // Store image.
-    FroalaEditor.Image.upload(req, '/uploads/', function(err, data) {
+    FroalaEditor.Image.upload(req, '/images/', function(err, data) {
         // Return data.
         if (err) {
             return res.send(JSON.stringify(err));
