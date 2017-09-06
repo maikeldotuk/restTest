@@ -8,7 +8,7 @@ var todos = require('./routes/todos');
 var pages = require('./routes/pages');
 var users = require('./routes/users');
 var cors = require('cors')
-var FroalaEditor = require('./node_modules/wysiwyg-editor-node-sdk/lib/froalaEditor.js');
+
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'dist'));
