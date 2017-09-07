@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var logger = require('morgan');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var index = require('./routes/index');
@@ -16,7 +16,20 @@ app.enable('trust proxy');
 app.set('views', path.join(__dirname, 'cmsDIST'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-app.use(logger(':method :url :status - :res[content-length] :user-agent :remote-addr'));
+morgan.token('type', function (req, res) { return req.headers['x-forwarded-for'] || req.connection.remoteAddress});
+app.use(morgan(function (tokens, req, res) {
+    return [
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, 'content-length'), '-',
+        tokens['response-time'](req, res), 'ms',
+        tokens.type(req, res)
+   ].join(' ')
+}));
+
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false

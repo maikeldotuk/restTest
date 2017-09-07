@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-//var db = mongojs('mongodb://admin:admin123@ds037827.mongolab.com:37827/ng2todoapp', ['pages']);
-//var db = mongojs('mongodb://maikeldotuk:54d413k14M@ds036617.mlab.com:36617/skillboxdb', ['pages']);
-var db = mongojs('mongodb://maikel:54d413k14M@maikel.uk:27017/skillboxdb', ['pages']);
+const conf = require('../conf.js');
+var db = mongojs(conf.values.server, ['pages']);
 
 /* GET All pages */
 router.get('/pages', function(req, res, next) {

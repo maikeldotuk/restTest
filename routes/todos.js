@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-
-var db = mongojs('mongodb://maikel:54d413k14M@maikel.uk:27017/skillboxdb', ['todos']);
+const conf = require('../conf.js');
+var db = mongojs(conf.values.server, ['todos']);
 
 /* GET All Todos */
 router.get('/todos', function(req, res, next) {

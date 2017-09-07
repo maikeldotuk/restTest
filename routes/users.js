@@ -1,14 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-//var db = mongojs('mongodb://admin:admin123@ds037827.mongolab.com:37827/ng2todoapp', ['users']);
-//var db = mongojs('mongodb://maikeldotuk:54d413k14M@ds036617.mlab.com:36617/skillboxdb', ['users']);
-var db = mongojs('mongodb://maikel:54d413k14M@maikel.uk:27017/skillboxdb', ['users']);
+const conf = require('../conf.js');
+var db = mongojs(conf.values.server, ['users']);
 
-
+const userpass = conf.values.userpass;
 /* GET All users */
 router.get('/users', function(req, res, next) {
-
     db.users.find(function(err, users) {
         if (err) {
             res.send(err);
@@ -20,8 +18,7 @@ router.get('/users', function(req, res, next) {
 });
 /* GET One Todo with the provided ID */
 router.get('/user/:password', function(req, res, next) {
-    console.log(req.params.password);
-    if (req.params.password == "54d413k14M") {
+    if (req.params.password === userpass) {
         var results = { 'password': 'true' }
         res.json(results);
     } else {
