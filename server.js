@@ -23,14 +23,16 @@ function doThis(ipNumber) {
 }
 morgan.token('type', function (req, res) { return req.headers['x-forwarded-for'] || req.connection.remoteAddress});
 app.use(morgan(function (tokens, req, res) {
-    return [
-        tokens.method(req, res),
-        tokens.url(req, res),
-        tokens.status(req, res),
-        tokens.res(req, res, 'content-length'), '-',
-        tokens['response-time'](req, res), 'ms',
-        doThis(tokens.type(req, res))
-   ].join(' ')
+    doThis();
+        return [
+            tokens.method(req, res),
+            tokens.url(req, res),
+            tokens.status(req, res),
+            tokens.res(req, res, 'content-length'), '-',
+            tokens['response-time'](req, res), 'ms',
+            tokens['user-agent'](req, res),
+            tokens.type(req,res)
+        ].join(' ')
 }));
 
 
