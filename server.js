@@ -10,11 +10,12 @@ var users = require('./routes/users');
 var cors = require('cors')
 
 var app = express();
+app.enable('trust proxy');
 // view engine setup
 app.set('views', path.join(__dirname, 'dist'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-app.use(logger(':method :url :status - :res[content-length] :user-agent'));
+app.use(logger(':method :url :status - :res[content-length] :user-agent :remote-addr'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
