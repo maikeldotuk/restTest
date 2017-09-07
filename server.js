@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var cors = require('cors')
 var serveIndex = require('serve-index');
 var iplocation = require('iplocation');
+var chalk = require('chalk')
 
 var app = express();
 app.enable('trust proxy');
@@ -17,9 +18,19 @@ app.enable('trust proxy');
 app.set('views', path.join(__dirname, 'cmsDIST'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-
+var called = false
 function doThis(ipNumber) {
-    return iplocation(ipNumber).then(res => { console.log(res.country_name + ':' + res.city); })
+    if (called==false) {
+        called = true;
+        setTimeout(() => {
+        iplocation(ipNumber).then(res => { console.log('Last user connected from: ' + chalk.inverse(res.country_name + ': ' + res.city)); });
+        called = false;
+    },2000)
+    }
+}
+
+function colorify(data) {
+    return chalk.red(data);
 }
 morgan.token('type', function (req, res) { return req.headers['x-forwarded-for'] || req.connection.remoteAddress});
 app.use(morgan(function (tokens, req, res) {
@@ -27,11 +38,11 @@ app.use(morgan(function (tokens, req, res) {
         return [
             tokens.method(req, res),
             tokens.url(req, res),
-            tokens.status(req, res),
+            colorify(tokens.status(req, res)),
             tokens.res(req, res, 'content-length'), '-',
             tokens['response-time'](req, res), 'ms',
             tokens['user-agent'](req, res),
-            tokens.type(req,res)
+            colorify(tokens.type(req,res))
         ].join(' ')
 }));
 
