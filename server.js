@@ -34,7 +34,7 @@ function colorify(data) {
 }
 morgan.token('type', function (req, res) { return req.headers['x-forwarded-for'] || req.connection.remoteAddress});
 app.use(morgan(function (tokens, req, res) {
-    doThis();
+    doThis(tokens.type(req, res));
         return [
             tokens.method(req, res),
             tokens.url(req, res),
