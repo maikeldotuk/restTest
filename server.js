@@ -61,11 +61,13 @@ app.use('/api/v1/', users);
 app.use(express.static('cmsDIST'));
 app.use('/images', express.static('images'));
 app.use('/images', serveIndex('public/images', {'icons': true}));
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
 
-    res.render('404.html', { status: 404, url: req.url });
-});
+// This fixed the fallback address and at the same time got rid of the need for a 404.html file
+const fallback = require('express-history-api-fallback');
+app.use(fallback(__dirname + '/cmsDIST/index.html'));
+
+
+
 var server = app.listen(3000, function() {
     var host = 'localhost';
     var port = server.address().port;
