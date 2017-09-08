@@ -1,11 +1,7 @@
-# restTest
-This is the **RestAPI behind www.maikel.uk**
-I can't share it because my password is on it. 
+# RestTest
+This is the **Rest API behind www.maikel.uk**
+ 
+This API is the backend and learningCMS repo is the frontend. 
 
-For now the Angular UI and the REST API are here in a single thing. But it won't be like that for long. As once I add routing to the Angular website it'll be incompatible with this. I think. 
-
-UPDATE:
-Now I can share it because I've learnt how to use require('myPass'), put my files in a different file and configure .gitignore to not share them. Yay!
-
-So now this repo is public
+I'm working on it, it was based in an API example I found online about a todo-app. I'm still changing bits and improving it. 
 
