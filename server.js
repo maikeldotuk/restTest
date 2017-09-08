@@ -12,6 +12,7 @@ var serveIndex = require('serve-index');
 var iplocation = require('iplocation');
 var chalk = require('chalk');
 const fallback = require('express-history-api-fallback');
+var FroalaEditor = require('wysiwyg-editor-node-sdk/lib/froalaEditor.js');
 
 
 
@@ -85,6 +86,52 @@ app.use('/api/v1/', pages);
 app.use('/api/v1/', users);
 app.use(express.static('cmsDIST'));
 app.use('/images', express.static('images'));
+
+
+
+
+var options = {
+    validation: {
+        'allowedExts': ['gif', 'jpeg', 'jpg', 'png', 'svg', 'blob'],
+        'allowedMimeTypes': ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/svg+xml']
+    }
+}
+// Path to upload image.
+app.post('/upload_image', function (req, res) {
+
+    // Store image.
+    FroalaEditor.Image.upload(req, '/images/', options, function(err, data) {
+        // Return data.
+        if (err) {
+            return res.send(JSON.stringify(err));
+        }
+
+        res.send(data);
+    });
+});
+
+app.get('/load_images', function (req, res) {
+
+    FroalaEditor.Image.list('/images/', function(err, data) {
+
+        if (err) {
+            return res.status(404).end(JSON.stringify(err));
+        }
+        return res.send(data);
+    });
+});
+
+app.post('/delete_image', function (req, res) {
+
+    FroalaEditor.Image.delete(req.body.src, function(err) {
+
+        if (err) {
+            return res.status(404).end(JSON.stringify(err));
+        }
+        return res.end();
+    });
+});
+
 
 
 // This fixed the fallback address and at the same time got rid of the need for a 404.html file
