@@ -10,7 +10,10 @@ var users = require('./routes/users');
 var cors = require('cors')
 var serveIndex = require('serve-index');
 var iplocation = require('iplocation');
-var chalk = require('chalk')
+var chalk = require('chalk');
+const fallback = require('express-history-api-fallback');
+
+
 
 var app = express();
 app.enable('trust proxy');
@@ -48,6 +51,28 @@ app.use(morgan(function (tokens, req, res) {
 
 
 
+const Meta = require('express-metatag');
+
+const middleware = Meta('tags', true)(function(req, res, next){
+    const url = req.protocol + "://" + req.get('host');
+    return [{
+    'twitter:card': 'summary',
+    'twitter:site': '@maikeldotuk',
+    'twitter:title': 'Maikel.uk',
+    'twitter:description': 'A Content Management System to empower self-directed learning.',
+    'twitter:image': 'https://www.maikel.uk/images/logo.png',
+
+    'og:url' : url,
+    'og:type': 'website',
+    'og:title': 'Maikel.uk',
+    'og:description': 'A Content Management System to empower self-directed learning.',
+    'og:image' : 'https://www.maikel.uk/images/logo.png',
+    }]
+});
+
+
+
+app.use(middleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
@@ -60,11 +85,11 @@ app.use('/api/v1/', pages);
 app.use('/api/v1/', users);
 app.use(express.static('cmsDIST'));
 app.use('/images', express.static('images'));
-app.use('/images', serveIndex('public/images', {'icons': true}));
+
 
 // This fixed the fallback address and at the same time got rid of the need for a 404.html file
-const fallback = require('express-history-api-fallback');
-app.use(fallback(__dirname + '/cmsDIST/index.html'));
+
+app.use(fallback(__dirname + '/cmsDIST/'));
 
 
 
