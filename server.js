@@ -4,7 +4,7 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var index = require('./routes/index');
-var todos = require('./routes/todos');
+var skills = require('./routes/skills');
 var pages = require('./routes/pages');
 var users = require('./routes/users');
 var cors = require('cors')
@@ -81,7 +81,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(cors());
 app.use('/', index);
-app.use('/api/v1/', todos);
+app.use('/api/v1/', skills);
 app.use('/api/v1/', pages);
 app.use('/api/v1/', users);
 app.use(express.static('cmsDIST'));
