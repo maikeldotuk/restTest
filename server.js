@@ -14,9 +14,11 @@ var chalk = require('chalk');
 const fallback = require('express-history-api-fallback');
 var FroalaEditor = require('wysiwyg-editor-node-sdk/lib/froalaEditor.js');
 
-
+var detector = require('spider-detector');
 
 var app = express();
+app.use(detector.middleware());
+
 app.enable('trust proxy');
 // view engine setup
 app.set('views', path.join(__dirname, 'cmsDIST'));
@@ -50,30 +52,26 @@ app.use(morgan(function (tokens, req, res) {
         ].join(' ')
 }));
 
+const ipfilter = require('express-ipfilter').IpFilter;
+var ips = ['51.255.173.44'];
+app.use(ipfilter(ips));
 
+app.get('/', function(req, res, next) {
+    if (req.isSpider()) {
+        console.log("Is a Spider");
+	res.render('spider.html');
+    } else {
+       console.log("Is not a Spider");
 
-const Meta = require('express-metatag');
-
-const middleware = Meta('tags', true)(function(req, res, next){
-    const url = req.protocol + "://" + req.get('host');
-    return [{
-    'twitter:card': 'summary',
-    'twitter:site': '@maikeldotuk',
-    'twitter:title': 'Maikel.uk',
-    'twitter:description': 'A Content Management System to empower self-directed learning.',
-    'twitter:image': 'https://www.maikel.uk/images/logo.png',
-
-    'og:url' : url,
-    'og:type': 'website',
-    'og:title': 'Maikel.uk',
-    'og:description': 'A Content Management System to empower self-directed learning.',
-    'og:image' : 'https://www.maikel.uk/images/logo.png',
-    }]
-});
+	next();
+    }
+})
 
 
 
-app.use(middleware);
+
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
@@ -87,7 +85,7 @@ app.use('/api/v1/', users);
 app.use(express.static('cmsDIST'));
 app.use('/images', express.static('images'));
 
-app.use(require('prerender-node').set('prerenderToken', '21C18DSm7DHmzORM1Q2Z'));
+//app.use(require('prerender-node').set('prerenderServiceUrl', 'http://localhost:3000/').set('prerenderToken', '21C18DSm7DHmzORM1Q2Z'));
 
 
 var options = {

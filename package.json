@@ -17,12 +17,16 @@
         "ejs": "^2.5.7",
         "express": "^4.15.4",
         "express-history-api-fallback": "^2.2.1",
+        "express-ipfilter": "^0.3.1",
         "express-metatag": "^0.1.0",
         "iplocation": "^5.0.0",
         "mongojs": "^2.4.1",
         "morgan": "^1.8.2",
+        "nodemon": "^1.12.0",
         "path": "^0.12.7",
+        "prerender-node": "^2.7.2",
         "serve-index": "^1.9.0",
+        "spider-detector": "^1.0.17",
         "wysiwyg-editor-node-sdk": "^2.3.4-rc.1"
     }
 }
