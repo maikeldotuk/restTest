@@ -25,11 +25,12 @@ app.set('views', path.join(__dirname, 'cmsDIST'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 var called = false
-function doThis(ipNumber) {
+function doThis(req, ipNumber) {
+const spider = req.isSpider();
     if (called==false) {
         called = true;
         setTimeout(() => {
-        iplocation(ipNumber).then(res => { console.log('Last user connected from: ' + chalk.inverse(res.country_name + ': ' + res.city)); });
+        iplocation(ipNumber).then(res => { console.log('Last user connected from: ' + chalk.inverse(res.country_name + ': ' + res.city) + chalk.red(' Spider:' + spider)); });
         called = false;
     },2000)
     }
@@ -40,7 +41,7 @@ function colorify(data) {
 }
 morgan.token('type', function (req, res) { return req.headers['x-forwarded-for'] || req.connection.remoteAddress});
 app.use(morgan(function (tokens, req, res) {
-    doThis(tokens.type(req, res));
+    doThis(req, tokens.type(req, res));
         return [
             tokens.method(req, res),
             tokens.url(req, res),
@@ -56,6 +57,7 @@ const ipfilter = require('express-ipfilter').IpFilter;
 var ips = ['51.255.173.44'];
 app.use(ipfilter(ips));
 
+/*
 app.get('/', function(req, res, next) {
     if (req.isSpider()) {
         console.log("Is a Spider");
@@ -65,7 +67,7 @@ app.get('/', function(req, res, next) {
 
 	next();
     }
-})
+})*/
 
 
 
