@@ -176,7 +176,7 @@ app.get('/skills/*', function (req, res, next) {
                     res.render('../seo.handlebars', {
                         address: 'https://www.maikel.uk' + theURL,
                         title: theTitle,
-                        description: skills.descriptHTML.substring(0, 200).replace(/<(?:.|\n)*?>/gm, ' '),
+                        description: skills.descriptHTML.substring(0, 300).replace(/<(?:.|\n)*?>/gm, ' ') + "...",
                         imgSECURE: skills.logoURL,
                         imgINSECURE: 'http://www.maikel.uk:3000/' + skills.logoURL.substring(22)
                     });
