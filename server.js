@@ -145,7 +145,7 @@ app.post('/delete_image', function (req, res) {
 
 app.get('/skills/*', function (req, res, next) {
     if (req.isSpider()) {
-   // if (true) {
+   //if (true) {
         const theURL = req.url;
 
         //To get rid of the %20
@@ -165,7 +165,8 @@ app.get('/skills/*', function (req, res, next) {
                         address: 'https://www.maikel.uk' + theURL,
                         title: theTitle,
                         description: descBase,
-                        imgURL: 'http://www.maikel.uk:3000/images/logos/neverstop.jpg'
+                        imgINSECURE: 'http://www.maikel.uk:3000/images/logos/neverstop.jpg',
+                        imgSECURE: 'https://www.maikel.uk/images/logos/neverstop.jpg',
                     });
                 } else {
                     console.log(skills);
@@ -176,7 +177,8 @@ app.get('/skills/*', function (req, res, next) {
                         address: 'https://www.maikel.uk' + theURL,
                         title: theTitle,
                         description: skills.descriptHTML.substring(0, 100).replace(/<(?:.|\n)*?>/gm, ' '),
-                        imgURL: skills.logoURL
+                        imgSECURE: skills.logoURL,
+                        imgINSECURE: 'http://www.maikel.uk:3000/' + skills.logoURL.substring(22)
                     });
                 }
             });
