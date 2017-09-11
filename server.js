@@ -215,7 +215,7 @@ app.get('/skills/:skilltitle/:pageTitle', function (req, res, next) {
                 } else {
 
                     results = page;
-                    console.log(results);
+
 
                     res.render('../seo.handlebars', {
                         address: 'https://www.maikel.uk' + theURL,
