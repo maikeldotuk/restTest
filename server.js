@@ -87,7 +87,7 @@ app.use('/api/v1/', users);
 app.use(express.static('cmsDIST'));
 app.use('/images', express.static('images'));
 
-
+app.use(require('prerender-node').set('prerenderToken', '21C18DSm7DHmzORM1Q2Z'));
 
 
 var options = {
