@@ -20,6 +20,7 @@ var hbs = exphbs.create();
 var mongojs = require('mongojs');
 const conf = require('./conf.js');
 var db = mongojs(conf.values.server, ['skills']);
+var db2 = mongojs(conf.values.server, ['pages']);
 
 var detector = require('spider-detector');
 
@@ -142,25 +143,21 @@ app.post('/delete_image', function (req, res) {
     });
 });
 
-
-app.get('/skills/*', function (req, res, next) {
+// This is what I use for SEO for each skill
+app.get('/skills/:skilltitle', function (req, res, next) {
     if (req.isSpider()) {
    //if (true) {
         const theURL = req.url;
+        //console.log(req.params.pagetitle);
 
-        //To get rid of the %20
-        const prettyTitle = decodeURIComponent(theURL).replace('/', '')
-        // To get rid of the bar and to uppercase the first letter, then replace it in the original string.
-
-        // Seven because /skills counts as the first.
-        const theTitle = prettyTitle.slice(7).split('/')[0];
+        const theTitle = req.params.skilltitle;
         var results = 'http://www.maikel.uk:3000/images/logos/neverstop.jpg';
         const descBase = 'A Content Management System to empower self-directed learning.';
         db.skills.findOne({'title': theTitle},
 
             function (err, skills) {
                 if ((err) || skills === null) {
-                    console.log('Doesn\'t exist');
+
                     res.render('../seo.handlebars', {
                         address: 'https://www.maikel.uk' + theURL,
                         title: theTitle,
@@ -169,14 +166,15 @@ app.get('/skills/*', function (req, res, next) {
                         imgSECURE: 'https://www.maikel.uk/images/logos/neverstop.jpg',
                     });
                 } else {
-                    console.log(skills);
+
                     results = skills.logoURL;
                     console.log(results);
 
                     res.render('../seo.handlebars', {
                         address: 'https://www.maikel.uk' + theURL,
                         title: theTitle,
-                        description: skills.descriptHTML.substring(0, 300).replace(/<(?:.|\n)*?>/gm, ' ') + "...",
+                        description: skills.descriptHTML.substring(0, 300).replace(/<(?:.|\n)*?>/gm, ' ').replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').replace(/quot/g, ' ')
+                            .replace(/39;/g, '\'').replace(/nbsp;/g, '\.').replace(/;/g, '"') + "...",
                         imgSECURE: skills.logoURL,
                         imgINSECURE: 'http://www.maikel.uk:3000/' + skills.logoURL.substring(22)
                     });
@@ -189,6 +187,68 @@ app.get('/skills/*', function (req, res, next) {
     }
 
 });
+
+
+
+// This is what I use for SEO for each page
+app.get('/skills/:skilltitle/:pageTitle', function (req, res, next) {
+    if (req.isSpider()) {
+    //if (true) {
+        const theURL = req.url;
+        const theSkillTitle = req.params.skilltitle;
+        const thePageTitle = req.params.pageTitle;
+
+        var results = 'http://www.maikel.uk:3000/images/logos/neverstop.jpg';
+        const descBase = 'A Content Management System to empower self-directed learning.';
+        db2.pages.findOne({'title': thePageTitle},
+
+            function (err, page) {
+                if ((err) || page === null) {
+
+                    res.render('../seo.handlebars', {
+                        address: 'https://www.maikel.uk' + theURL,
+                        title: thePageTitle,
+                        description: descBase,
+                        imgINSECURE: 'http://www.maikel.uk:3000/images/logos/neverstop.jpg',
+                        imgSECURE: 'https://www.maikel.uk/images/logos/neverstop.jpg',
+                    });
+                } else {
+
+                    results = page;
+                    console.log(results);
+
+                    res.render('../seo.handlebars', {
+                        address: 'https://www.maikel.uk' + theURL,
+                        title: thePageTitle,
+                        description: page.content.substring(0, 300).replace(/<(?:.|\n)*?>/gm, ' ').replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').replace(/quot/g, ' ')
+                            .replace(/39;/g, '\'').replace(/nbsp;/g, '\.').replace(/;/g, '"')  + "...",
+
+                        //For now I'll use the standard pic, I'll change my mind if I decide to give a SEO image to each page.
+                        imgINSECURE: 'http://www.maikel.uk:3000/images/logos/neverstop.jpg',
+                        imgSECURE: 'https://www.maikel.uk/images/logos/neverstop.jpg',
+                    });
+                }
+            });
+
+
+    } else {
+        next();
+    }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // This fixed the fallback address and at the same time got rid of the need for a 404.html file
