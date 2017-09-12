@@ -224,8 +224,8 @@ app.get('/skills/:skilltitle/:pageTitle', function (req, res, next) {
                             .replace(/39;/g, '\'').replace(/nbsp;/g, '\.').replace(/;/g, '"')  + "...",
 
                         //For now I'll use the standard pic, I'll change my mind if I decide to give a SEO image to each page.
-                        imgINSECURE: 'http://www.maikel.uk:3000/images/logos/neverstop.jpg',
-                        imgSECURE: 'https://www.maikel.uk/images/logos/neverstop.jpg',
+                        imgSECURE: page.imgURL === 'empty' ? 'https://www.maikel.uk/images/logos/neverstop.jpg': page.imgURL,
+                        imgINSECURE: page.imgURL === 'empty' ? 'http://www.maikel.uk:3000/images/logos/neverstop.jpg' : 'http://www.maikel.uk:3000/' + page.imgURL.substring(22)
                     });
                 }
             });
