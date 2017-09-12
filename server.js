@@ -145,8 +145,8 @@ app.post('/delete_image', function (req, res) {
 
 // This is what I use for SEO for each skill
 app.get('/skills/:skilltitle', function (req, res, next) {
-    if (req.isSpider()) {
-   //if (true) {
+    //if (req.isSpider()) {
+   if (true) {
         const theURL = req.url;
         //console.log(req.params.pagetitle);
 
@@ -167,6 +167,12 @@ app.get('/skills/:skilltitle', function (req, res, next) {
                     });
                 } else {
 
+                    if (skills.logoURL.includes('https://www.maikel.uk')) {
+                        console.log(skills.logoURL);
+                    } else {
+                        skills.logoURL = 'https://www.maikel.uk' + skills.logoURL;
+                    }
+
                     results = skills.logoURL;
                     console.log(results);
 
@@ -176,7 +182,8 @@ app.get('/skills/:skilltitle', function (req, res, next) {
                         description: skills.descriptHTML.substring(0, 300).replace(/<(?:.|\n)*?>/gm, ' ').replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').replace(/quot/g, ' ')
                             .replace(/39;/g, '\'').replace(/nbsp;/g, '\.').replace(/;/g, '"') + "...",
                         imgSECURE: skills.logoURL,
-                        imgINSECURE: 'http://www.maikel.uk:3000/' + skills.logoURL.substring(22)
+                        imgINSECURE: 'http://www.maikel.uk:3000/' + skills.logoURL.substring(22),
+                        theText: skills.descriptHTML
                     });
                 }
             });
@@ -192,8 +199,8 @@ app.get('/skills/:skilltitle', function (req, res, next) {
 
 // This is what I use for SEO for each page
 app.get('/skills/:skilltitle/:pageTitle', function (req, res, next) {
-    if (req.isSpider()) {
-    //if (true) {
+    //if (req.isSpider()) {
+    if (true) {
         const theURL = req.url;
         const theSkillTitle = req.params.skilltitle;
         const thePageTitle = req.params.pageTitle;
@@ -214,8 +221,12 @@ app.get('/skills/:skilltitle/:pageTitle', function (req, res, next) {
                     });
                 } else {
 
-                    results = page;
 
+                    if (page.imgURL.includes('https://www.maikel.uk')) {
+                        console.log(page.imgURL);
+                    } else {
+                        page.imgURL = 'https://www.maikel.uk' + page.imgURL;
+                    }
 
                     res.render('../seo.handlebars', {
                         address: 'https://www.maikel.uk' + theURL,
@@ -225,7 +236,8 @@ app.get('/skills/:skilltitle/:pageTitle', function (req, res, next) {
 
                         //For now I'll use the standard pic, I'll change my mind if I decide to give a SEO image to each page.
                         imgSECURE: page.imgURL === 'empty' ? 'https://www.maikel.uk/images/logos/neverstop.jpg': page.imgURL,
-                        imgINSECURE: page.imgURL === 'empty' ? 'http://www.maikel.uk:3000/images/logos/neverstop.jpg' : 'http://www.maikel.uk:3000/' + page.imgURL.substring(22)
+                        imgINSECURE: page.imgURL === 'empty' ? 'http://www.maikel.uk:3000/images/logos/neverstop.jpg' : 'http://www.maikel.uk:3000/' + page.imgURL.substring(22),
+                        theText: page.content
                     });
                 }
             });
