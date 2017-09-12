@@ -85,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/routes/pages.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="792">
-              <caret line="69" column="70" lean-forward="false" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
+              <caret line="69" column="29" lean-forward="true" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="74" />
               <folding />
             </state>
           </provider>
@@ -357,7 +357,7 @@
       <workItem from="1504821906001" duration="9279000" />
       <workItem from="1504880464215" duration="12873000" />
       <workItem from="1504910629553" duration="4149000" />
-      <workItem from="1505152012446" duration="15373000" />
+      <workItem from="1505152012446" duration="16192000" />
     </task>
     <task id="LOCAL-00001" summary="Added error page">
       <created>1504026342626</created>
@@ -426,7 +426,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57208000" />
+    <option name="totallyTimeSpent" value="58027000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3866" height="2106" extended-state="0" />
@@ -835,7 +835,7 @@
     <entry file="file://$PROJECT_DIR$/routes/pages.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="792">
-          <caret line="69" column="70" lean-forward="false" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
+          <caret line="69" column="29" lean-forward="true" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="74" />
           <folding />
         </state>
       </provider>
