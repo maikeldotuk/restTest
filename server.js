@@ -145,8 +145,8 @@ app.post('/delete_image', function (req, res) {
 
 // This is what I use for SEO for each skill
 app.get('/skills/:skilltitle', function (req, res, next) {
-    //if (req.isSpider()) {
-   if (true) {
+   if (req.isSpider()) {
+   //if (true) {
         const theURL = req.url;
         //console.log(req.params.pagetitle);
 
@@ -199,8 +199,8 @@ app.get('/skills/:skilltitle', function (req, res, next) {
 
 // This is what I use for SEO for each page
 app.get('/skills/:skilltitle/:pageTitle', function (req, res, next) {
-    //if (req.isSpider()) {
-    if (true) {
+    if (req.isSpider()) {
+    //if (true) {
         const theURL = req.url;
         const theSkillTitle = req.params.skilltitle;
         const thePageTitle = req.params.pageTitle;
