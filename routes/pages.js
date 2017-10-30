@@ -69,6 +69,8 @@ router.put('/page/:id', function(req, res, next) {
         updObj.skill = todo.skill;
         updObj.imgURL = todo.imgURL !== undefined  ? todo.imgURL : 'empty';
 	    updObj.editDate = todo.editDate;
+	    updObj.test = todo.test;
+	    updObj.scores = todo.scores;
     }
 
     if (!updObj) {
