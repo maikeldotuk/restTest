@@ -69,7 +69,7 @@ app.use(morgan(function (tokens, req, res) {
 }));
 
 const ipfilter = require('express-ipfilter').IpFilter;
-var ips = ['51.255.173.44'];
+var ips = ['51.255.173.44','192.0.101.226'];
 app.use(ipfilter(ips));
 
 /*
