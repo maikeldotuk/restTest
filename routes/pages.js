@@ -81,6 +81,7 @@ router.put('/page/:id', function(req, res, next) {
                 updObj.imgURL = todo.imgURL !== undefined  ? todo.imgURL : 'empty';
                 updObj.editDate = todo.editDate;
                 updObj.test = old.test !== undefined  ? old.test : [];
+                updObj.scores = old.scores !== undefined  ? old.scores : [];
             }
             console.log("Updating page");
             console.log("\n");
