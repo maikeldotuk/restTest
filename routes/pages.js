@@ -63,6 +63,14 @@ router.put('/page/:id', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     var todo = req.body;
     var updObj = {};
+    if (todo.title) {
+        updObj.title = todo.title;
+        updObj.content = todo.content;
+        updObj.skill = todo.skill;
+        updObj.imgURL = todo.imgURL !== undefined  ? todo.imgURL : 'empty';
+	    updObj.editDate = todo.editDate;
+    }
+
 
     // Need to get the test from the old object. This is a hack and should be refactored as it is copying other
     // function
